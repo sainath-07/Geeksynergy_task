@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import TopBar from "./TopBar";
+import toast from "react-hot-toast";
 
-const LoginPage = ({
-  setloginpage,
-  setsignpupage,
-  setmoviespage,
-}) => {
+const LoginPage = ({ setloginpage, setsignpupage, setmoviespage }) => {
   const [credentials, setcredentials] = useState({
-    name: "",
+    email: "",
     password: "",
   });
 
-  const getUserdetails = JSON.parse(localStorage.getItem("userdetails"));
+  const getUserdetails = JSON.parse(localStorage.getItem("userdetails")) || [];
+  console.log(getUserdetails);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,70 +19,76 @@ const LoginPage = ({
     e.preventDefault();
 
     if (getUserdetails) {
-      const { name, password } = getUserdetails;
-
-      if (name === credentials.name && password === credentials.password) {
+      const logintrue = getUserdetails.find(
+        (user) =>
+          user.email === credentials.email &&
+          user.password === credentials.password
+      );
+      if (logintrue) {
         setloginpage(false);
         setsignpupage(false);
         setmoviespage(true);
-
-        alert("login is successfull");
+        toast.success("Login is successful!");
       } else {
-        alert("Name or password is invalid, try again.");
+        toast.error("Name or password is invalid, try again.");
       }
     } else {
-      alert("No user found. Please sign up first.");
+      toast.error("No user found. Please sign up first.");
     }
   };
 
   return (
     <>
-      <TopBar />
       <form
         onSubmit={handleloginform}
-        className=" h-[99vh] flex items-center justify-center"
+        className="h-[99vh] flex items-center justify-center"
       >
-        <div className="w-1/2 flex flex-col items-center justify-center border space-y-8 h-[70%] ">
-          <p className="text-2xl font-bold text-center">Login form</p>
-          <div>
-            <label htmlFor="name" className="text-xl font-semibold">
-              Name :
+        <div
+          className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg space-y-6"
+          style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px" }}
+        >
+          <p className="text-3xl font-bold text-center text-gray-800">Login</p>
+
+          <div className="flex flex-col space-y-2">
+            <label htmlFor="name" className="text-lg font-medium text-gray-700">
+              Email
             </label>
-            <br />
             <input
-              type="text"
+              type="email"
               id="name"
-              name="name"
-              placeholder="enter name"
+              name="email"
+              placeholder="Enter your name"
               autoComplete="off"
-              className="border rounded-md border-gray-400 text-xl p-2"
-              size={40}
+              className="border rounded-lg border-gray-300 text-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               onChange={handleChange}
               required
             />
           </div>
-          <div>
-            <label htmlFor="password" className="text-xl font-semibold">
-              Password :
+
+          <div className="flex flex-col space-y-2">
+            <label
+              htmlFor="password"
+              className="text-lg font-medium text-gray-700"
+            >
+              Password
             </label>
-            <br />
             <input
               type="password"
               id="password"
               name="password"
-              placeholder="enter password"
+              placeholder="Enter your password"
               autoComplete="off"
-              className="border rounded-md border-gray-400 text-xl p-2"
-              size={40}
+              className="border rounded-lg border-gray-300 text-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               onChange={handleChange}
               required
             />
           </div>
+
           <button
             type="submit"
-            className="bg-green-600  text-white p-2 text-xl rounded-sm px-8"
+            className="bg-blue-600 text-white text-lg font-medium py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out w-full mt-4"
           >
-            login
+            Login
           </button>
         </div>
       </form>

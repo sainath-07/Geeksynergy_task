@@ -2,6 +2,7 @@ import { useState } from "react";
 import LoginPage from "../Components/LoginPage";
 import SignupPage from "../Components/SignupPage";
 import MoviesPage from "../Components/MoviesPage";
+import TopBar from "../Components/TopBar";
 
 const Navigation = () => {
   const [moviespage, setMoviesPage] = useState(false);
@@ -10,6 +11,12 @@ const Navigation = () => {
 
   return (
     <div>
+      <TopBar
+      moviespage={moviespage}
+      setMoviesPage={setMoviesPage}
+      setLoginPage={setLoginPage}
+      setSignupPage={setSignupPage}
+      />
       {signuppage && (
         <SignupPage
           setloginpage={setLoginPage}

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import TopBar from "./TopBar";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const SignupPage = ({
   moviespage,
@@ -14,6 +14,12 @@ const SignupPage = ({
     phonenumber: "",
     profession: "",
   });
+  const [userdata, setuserdata] = useState([]);
+
+  useEffect(() => {
+    const storedUsers = JSON.parse(localStorage.getItem("userdetails")) || [];
+    setuserdata(storedUsers);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,105 +28,113 @@ const SignupPage = ({
 
   const handleform = (e) => {
     e.preventDefault();
-    localStorage.setItem("userdetails", JSON.stringify(form));
+    const updatedUserData = [...userdata, form];
+    setuserdata(updatedUserData);
+    localStorage.setItem("userdetails", JSON.stringify(updatedUserData));
+
     setsignpupage(false);
     setloginpage(true);
     setmoviespage(false);
-
-    alert("User registered successfully!");
+    toast.success("User registered successfully!");
   };
 
   return (
     <>
-      <TopBar
-        
-      />
       <form
         onSubmit={handleform}
-        className=" w-full flex flex-col items-center h-[80vh] mt-24"
+        className="w-full flex flex-col items-center mt-24"
       >
         <div
-          className="w-1/2 border-2  space-y-7 grid justify-center p-4"
-          style={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
+          className="w-1/2 bg-white p-4 rounded-xl shadow-lg flex flex-col"
+          style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px" }}
         >
-          <div>
-            <p className="text-2xl font-bold text-center">Signup form</p>
-            <label htmlFor="name" className="text-xl font-semibold">
-              Name :
+          <p className="text-2xl font-bold text-center text-gray-800">
+            Sign Up
+          </p>
+
+          <div className="flex flex-col space-y-2">
+            <label htmlFor="name" className="text-lg font-medium text-gray-700">
+              Name
             </label>
-            <br />
             <input
               type="text"
               id="name"
               name="name"
-              placeholder="enter name"
+              placeholder="Enter your name"
               autoComplete="off"
-              className="border rounded-md border-gray-400 text-xl p-2"
-              size={40}
+              className="border rounded-lg border-gray-300 text-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               onChange={handleChange}
               required
             />
           </div>
 
-          <div>
-            <label htmlFor="email" className="text-xl font-semibold">
-              Email :
+          <div className="flex flex-col space-y-2">
+            <label
+              htmlFor="email"
+              className="text-lg font-medium text-gray-700"
+            >
+              Email
             </label>
-            <br />
             <input
-              type="text"
+              type="email"
               id="email"
-              placeholder="enter email"
+              name="email"
+              placeholder="Enter your email"
               autoComplete="off"
-              className="border rounded-md border-gray-400 text-xl p-2"
-              size={40}
+              className="border rounded-lg border-gray-300 text-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               onChange={handleChange}
               required
-              name="email"
             />
           </div>
-          <div>
-            <label htmlFor="password" className="text-xl font-semibold">
-              Password :
+
+          <div className="flex flex-col space-y-2">
+            <label
+              htmlFor="password"
+              className="text-lg font-medium text-gray-700"
+            >
+              Password
             </label>
-            <br />
             <input
               type="password"
               id="password"
               name="password"
-              placeholder="enter password"
+              placeholder="Enter your password"
               autoComplete="off"
-              className="border rounded-md border-gray-400 text-xl p-2"
-              size={40}
+              className="border rounded-lg border-gray-300 text-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               onChange={handleChange}
               required
             />
           </div>
-          <div>
-            <label htmlFor="phonenumber" className="text-xl font-semibold">
-              Phonenumber :
+
+          <div className="flex flex-col space-y-2">
+            <label
+              htmlFor="phonenumber"
+              className="text-lg font-medium text-gray-700"
+            >
+              Phone Number
             </label>
-            <br />
             <input
-              type="number"
+              type="tel"
               id="phonenumber"
-              placeholder="enter phonenumber"
-              autoComplete="off"
-              className="border  rounded-md border-gray-400 text-xl p-2"
               name="phonenumber"
-              size={40}
+              placeholder="Enter your phone number"
+              autoComplete="off"
+              className="border rounded-lg border-gray-300 text-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               onChange={handleChange}
               required
             />
           </div>
-          <div>
-            <label className="text-xl font-semibold">Profession : </label>
+
+          <div className="flex flex-col space-y-2">
+            <label className="text-lg font-medium text-gray-700">
+              Profession
+            </label>
             <select
               name="profession"
               value={form.profession}
               onChange={handleChange}
               required
-              className="border border-gray-400"
+              className="border rounded-lg border-gray-300 text-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
             >
               <option value="">Select Profession</option>
               <option value="Software Engineer">Software Engineer</option>
@@ -130,11 +144,12 @@ const SignupPage = ({
               <option value="Front-End Developer">Front-End Developer</option>
             </select>
           </div>
+
           <button
             type="submit"
-            className="bg-green-600 text-white text-xl w-[30%] p-2 rounded-md mx-auto"
+            className="bg-blue-600 text-white text-lg font-medium px-3 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out mx-auto mt-4"
           >
-            Signup
+            Sign Up
           </button>
         </div>
       </form>
