@@ -33,10 +33,9 @@ const MoviesPage = () => {
       <div className="mt-24 space-y-4">
         {loading ? (
           <>
-          <div className="flex mt-[200px]  justify-center">
-
-            <PulseLoader  color="#49dc28"  size={18} />
-          </div>
+            <div className="flex mt-[200px]  justify-center">
+              <PulseLoader color="#49dc28" size={18} />
+            </div>
           </>
         ) : (
           <>
@@ -45,7 +44,7 @@ const MoviesPage = () => {
               return (
                 <React.Fragment key={i}>
                   <div
-                    className="grid grid-cols-3 p-4 gap-4 w-[45vw] mx-auto"
+                    className="grid grid-cols-3 space-y-2 gap-4 w-[55vw] mx-auto"
                     style={{
                       boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
                     }}
@@ -66,22 +65,21 @@ const MoviesPage = () => {
                       />
                     </div>
                     {/* movie data */}
-                    <div className="space-y-6">
-                      <p className="text-2xl font-bold">{title}</p>
-                      <p className="text-xl font-semibold">Genre: {genre}</p>
+                    <div className="space-y-6 flex  flex-wrap w-full">
+                      <p className="text-2xl font-bold w-full">{title}</p>
+                      <p className="text-xl font-semibold w-full ">Genre: {genre}</p>
                       <p className="text-xl font-semibold">
                         Director: {director}
                       </p>
-                      <div>
-                        {stars.map((star, index) => (
-                          <p
-                            className="font-semibold flex flex-wrap"
-                            key={index}
-                          >
-                            Stars: {star}
-                          </p>
-                        ))}
-                      </div>
+                      <p className="font-semibold w-full flex flex-wrap overflow-hidden">
+                        {stars.map((star, index) => {
+                          return (
+                            <>Stars: {star}</>
+                            // <p key={index}>
+                            // </p>
+                          );
+                        })}
+                      </p>
                     </div>
                     <div className="text-center mx-2 rounded-md p-2 bg-sky-500 col-span-3 text-white font-bold cursor-pointer">
                       Watch Trailer

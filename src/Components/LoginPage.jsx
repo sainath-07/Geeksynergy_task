@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import TopBar from "./TopBar";
 
 const LoginPage = ({ setloginpage, setsignpupage, setmoviespage }) => {
   const [credentials, setcredentials] = useState({
@@ -39,6 +40,7 @@ const LoginPage = ({ setloginpage, setsignpupage, setmoviespage }) => {
 
   return (
     <>
+    {/* <TopBar/> */}
       <form
         onSubmit={handleloginform}
         className="h-[99vh] flex items-center justify-center"

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import TopBar from "./TopBar";
 
 const SignupPage = ({
   moviespage,
@@ -40,6 +41,8 @@ const SignupPage = ({
 
   return (
     <>
+        {/* <TopBar  /> */}
+
       <form
         onSubmit={handleform}
         className="w-full flex flex-col items-center mt-24"

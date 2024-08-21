@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const TopBar = ({ setSignupPage, setLoginPage, setMoviesPage, moviespage }) => {
   return (
@@ -24,7 +25,6 @@ const TopBar = ({ setSignupPage, setLoginPage, setMoviesPage, moviespage }) => {
                 setLoginPage(true);
                 setMoviesPage(false);
                 setSignupPage(false);
-               
               }}
             >
               Login
@@ -36,7 +36,6 @@ const TopBar = ({ setSignupPage, setLoginPage, setMoviesPage, moviespage }) => {
                 setSignupPage(true);
                 setLoginPage(false);
                 setMoviesPage(false);
-              
               }}
             >
               Signup
